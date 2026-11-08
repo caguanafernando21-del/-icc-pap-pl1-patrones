@@ -39,8 +39,8 @@ por la Ia
 
 ## Decisiones de diseño
 
-1. 
-2. 
+1. Diseño primero es algo minimalista, algo facil de comprender
+2. La mejorada con mas botones para que pueda ver los botones
 
 ## Conclusiones
 
