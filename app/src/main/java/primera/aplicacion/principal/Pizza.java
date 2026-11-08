@@ -1,5 +1,7 @@
-package primera.aplicacion.Productos_Base;
+package primera.aplicacion.principal;
 
-public class Pizza {
-    
+public class Pizza extends ProductoBase {
+    public Pizza() {
+        super("Pizza", 12.00, "Horno Leña");
+    }
 }

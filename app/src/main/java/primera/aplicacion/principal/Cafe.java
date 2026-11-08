@@ -1,5 +1,8 @@
-package primera.aplicacion.Productos_Base;
+package primera.aplicacion.principal;
 
-public class Cafe {
-    
+
+public class Cafe extends ProductoBase {
+    public Cafe() {
+        super("Café", 3.50, "Bebida");
+    }
 }

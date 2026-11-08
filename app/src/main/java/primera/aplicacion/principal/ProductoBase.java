@@ -1,4 +1,4 @@
-package primera.aplicacion.Productos_Base;
+package primera.aplicacion.principal;
 
 public abstract class ProductoBase implements Pedido {
     private static int contadorId = 1;

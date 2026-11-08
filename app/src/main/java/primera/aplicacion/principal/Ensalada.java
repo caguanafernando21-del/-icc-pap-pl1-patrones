@@ -1,5 +1,6 @@
-package primera.aplicacion.Productos_Base;
-
-public class Ensalada {
-    
+package primera.aplicacion.principal;
+public class Ensalada extends ProductoBase {
+    public Ensalada() {
+        super("Ensalada", 7.50, "Saludable");
+    }
 }

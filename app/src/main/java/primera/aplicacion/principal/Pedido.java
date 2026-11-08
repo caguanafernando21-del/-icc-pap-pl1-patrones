@@ -1,4 +1,4 @@
-package primera.aplicacion.Extras;
+package primera.aplicacion.principal;
 
 
 public interface Pedido extends Cloneable {
