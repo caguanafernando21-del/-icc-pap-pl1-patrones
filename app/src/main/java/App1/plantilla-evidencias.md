@@ -19,7 +19,7 @@ por la Ia
 
 | Caso | Operación / entrada | Resultado esperado | Resultado real | Evidencia | Estado |
 |---|---|---|---|---|---|
-| CA01 | Clonar Cafe dos veces | IDs diferentes; ambos empiezan en $2.20 | Se generaron IDs únicos secuenciales con precio base de $2.20 | Prueba en interfaz POS |  Exito |
+| CA01 | Clonar Cafe dos veces | IDs diferentes; ambos empiezan en $2.20 | Se generaron IDs unicos  con precio base de $2.20 | Prueba en interfaz POS |  Exito |
 | CA02 | Comparar clon y objeto del registro | Referencias distintas; el prototipo conserva su configuración | Instancias con referencias de memoria independientes | Prueba en interfaz POS | Exito |
 | CA03 | Al primer Cafe agregar Azucar y Crema | Descripcion incluye los dos ingredientes; costo actualizado | Muestra los ingredientes en lista y suma correcta de costos | Prueba en interfaz POS | Exito |
 | CA04 | Consultar el segundo Café sin ingredientes | Mantiene $2.20, sin ingredientes | Segundo cafe independiente limpio de extras | Prueba en interfaz POS | Exito |
@@ -31,6 +31,29 @@ por la Ia
 | CA10 | Agregar dos veces Azúcar a un Café | Total correcto y dos aplicaciones del decorador | Descripción muestra las dos aplicaciones y suma ambos costos | Prueba en interfaz POS | Exito |
 | CA11 | Reiniciar y volver a clonar Cafe | Nuevos pedidos parten nuevamente del valor base | Orden limpiada con botón de reinicio y lista para nuevo ciclo | Prueba en interfaz POS | Exito |
 
+
+Caso 1 capturas:
+![alt text](<Captura de pantalla 2026-11-08 230156.png>)
+
+![alt text](<Captura de pantalla 2026-11-08 230202.png>)
+
+Caso 3 capturas:
+![alt text](<Captura de pantalla 2026-11-08 230332.png>)
+
+Caso 4 captura:
+![alt text](<Captura de pantalla 2026-11-08 230156.png>)
+Caso 5 capturas:
+![alt text](<Captura de pantalla 2026-11-08 230720.png>)
+Caso 6 capturas: 
+![alt text](<Captura de pantalla 2026-11-08 230806.png>)
+Caso 7 capturas:
+![alt text](<Captura de pantalla 2026-11-08 230910.png>)
+Caso 8 capturas: 
+![alt text](<Captura de pantalla 2026-11-08 231233.png>)
+Caso 10 capturas:
+![alt text](<Captura de pantalla 2026-11-08 231322.png>)
+Caso 11 capturas:
+![alt text](<Captura de pantalla 2026-11-08 231406.png>)
 ## Identificación de patrones
 
 - **Prototype:** 

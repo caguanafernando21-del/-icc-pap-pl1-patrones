@@ -26,6 +26,10 @@ public class VentanaPrincipal extends JFrame {
     private final Color EMERALD = new Color(52, 211, 153), CYAN = new Color(34, 211, 238), BORDER = new Color(30, 41, 59);
 
     public VentanaPrincipal() {
+        registroProductos.registrarPrototipo("CAFE", new Cafe());
+        registroProductos.registrarPrototipo("ENSALADA", new Ensalada());
+        registroProductos.registrarPrototipo("PIZZA", new Pizza());
+
         setTitle("Lumen POS - Terminal");
         setSize(1200, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,16 +49,14 @@ public class VentanaPrincipal extends JFrame {
         col.setLayout(new BoxLayout(col, BoxLayout.Y_AXIS));
         col.setOpaque(false);
 
-        // 1. Productos Base
         JPanel pBase = tarjeta("☰ PRODUCTOS BASE");
         JPanel gridP = new JPanel(new GridLayout(2, 2, 8, 8));
         gridP.setOpaque(false);
-        gridP.add(boton("☕", "Café", "$2.20", "CAFE"));
+        gridP.add(boton("☕", "Café", "$3.50", "CAFE"));
         gridP.add(boton("🥗", "Ensalada", "$7.50", "ENSALADA"));
         gridP.add(boton("🍕", "Pizza", "$12.00", "PIZZA"));
         pBase.add(gridP, BorderLayout.CENTER);
 
-        // 2. Personalizar Extras
         JPanel pExtras = tarjeta("● PERSONALIZAR EXTRAS");
         pExtras.add(lblEditando, BorderLayout.NORTH);
         lblEditando.setForeground(CYAN);
@@ -81,8 +83,7 @@ public class VentanaPrincipal extends JFrame {
         contenedorExtrasCentro.add(gridE);
         pExtras.add(contenedorExtrasCentro, BorderLayout.CENTER);
 
-        // Boton Limpiar Orden
-        JButton btnLimpiar = new JButton("Reiniciar Pedido");
+        JButton btnLimpiar = new JButton("🗑 Limpiar / Reiniciar Pedido");
         estilizarBoton(btnLimpiar, new Color(153, 27, 27));
         btnLimpiar.addActionListener(e -> reiniciarOrden());
 
@@ -99,7 +100,6 @@ public class VentanaPrincipal extends JFrame {
         col.setLayout(new BoxLayout(col, BoxLayout.Y_AXIS));
         col.setOpaque(false);
 
-        // Orden en curso
         JPanel pOrden = tarjeta("● ORDEN EN CURSO");
         panelListaOrden.setLayout(new BoxLayout(panelListaOrden, BoxLayout.Y_AXIS));
         panelListaOrden.setBackground(ITEM);
@@ -113,7 +113,7 @@ public class VentanaPrincipal extends JFrame {
         pDesglose.add(txt("Subtotal Base:")); pDesglose.add(lblSubtotal);
         pDesglose.add(txt("Extras:")); pDesglose.add(lblExtras);
         pDesglose.add(txt("Neto:")); pDesglose.add(lblNeto);
-        pDesglose.add(txt("IVA (15%):")); pDesglose.add(lblIva);
+        pDesglose.add(txt("IVA (15%):")); pDesglose.add(lblIva); // Actualizado a 15%
         pDesglose.add(txt("TOTAL:")); pDesglose.add(lblTotal);
         lblTotal.setForeground(EMERALD); lblTotal.setFont(new Font("Monospaced", Font.BOLD, 14));
 
@@ -122,14 +122,12 @@ public class VentanaPrincipal extends JFrame {
         split.add(scroll); split.add(pDesglose);
         pOrden.add(split, BorderLayout.CENTER);
 
-        // Boton Terminar Pedido
-        JButton btnTerminar = new JButton("TERMINAR PEDIDO Y ENVIAR");
+        JButton btnTerminar = new JButton("✔ TERMINAR PEDIDO Y ENVIAR");
         estilizarBoton(btnTerminar, new Color(225, 29, 72));
         btnTerminar.setFont(new Font("SansSerif", Font.BOLD, 12));
         btnTerminar.addActionListener(e -> terminarPedido());
         pOrden.add(btnTerminar, BorderLayout.SOUTH);
 
-        // Recibo Térmico
         JPanel pRecibo = tarjeta("● RECIBO TÉRMICO DIGITAL");
         panelCuerpoTicket.setLayout(new BoxLayout(panelCuerpoTicket, BoxLayout.Y_AXIS));
         panelCuerpoTicket.setBackground(Color.WHITE);
@@ -142,12 +140,11 @@ public class VentanaPrincipal extends JFrame {
     }
 
     private void seleccionar(String tipo) {
-        registroProductos.registrarPrototipo("CAFE", new Cafe());
-        registroProductos.registrarPrototipo("ENSALADA", new Ensalada());
-        registroProductos.registrarPrototipo("PIZZA", new Pizza());
         pedidoActual = registroProductos.obtenerPrototipo(tipo);
-        lblEditando.setText("Editando: " + ((ProductoBase)pedidoActual).getNombre());
-        actualizar();
+        if (pedidoActual != null) {
+            lblEditando.setText("Editando: " + ((ProductoBase)pedidoActual).getNombre());
+            actualizar();
+        }
     }
 
     private void agregarIngrediente(String ing) {
@@ -204,10 +201,10 @@ public class VentanaPrincipal extends JFrame {
         while (base instanceof DecoradorIngrediente) base = ((DecoradorIngrediente)base).getPedidoWrappee();
         double costoBase = base.getCosto();
         double extras = total - costoBase;
-        double iva = total * 0.15;
+        double iva = total * 0.15; 
         double finalTotal = total + iva;
 
-        JLabel item = new JLabel("<html><b>1x " + ((ProductoBase)base).getNombre() + "</b><br><font color='#34d399'>" + pedidoActual.getDescripcion().replace("\n","<br>") + "</font></html>");
+        JLabel item = new JLabel("<html><b>1x " + ((ProductoBase)base).getNombre() + "</b> (ID: " + pedidoActual.getId() + ")<br><font color='#34d399'>" + pedidoActual.getDescripcion().replace("\n","<br>") + "</font></html>");
         item.setForeground(Color.WHITE);
         panelListaOrden.add(item);
 
@@ -225,13 +222,13 @@ public class VentanaPrincipal extends JFrame {
         lblIva.setText(String.format("$%.2f", iva));
         lblTotal.setText(String.format("$%.2f", finalTotal));
 
-        JLabel ticket = new JLabel("<html><center><b>Tienda de comida </b><br>" +
-                "Ticket ID: " + pedidoActual.getId() + "<br>" +
+        JLabel ticket = new JLabel("<html><center><b>LUMEN BISTRO & COFFEE</b><br>" +
+                "Ticket ID: #" + pedidoActual.getId() + "<br>" +
                 "------------------------------------------<br>" +
                 pedidoActual.getDescripcion().replace("\n","<br>") + "<br>" +
                 "------------------------------------------<br>" +
                 "SUBTOTAL: $" + String.format("%.2f", total) + "<br>" +
-                "I.V.A. (15%): $" + String.format("%.2f", iva) + "<br>" +
+                "I.V.A. (15%): $" + String.format("%.2f", iva) + "<br>" + 
                 "<b>TOTAL: $" + String.format("%.2f", finalTotal) + "</b><br><br>" +
                 "<i>¡Gracias por su visita!</i></center></html>");
         ticket.setForeground(Color.BLACK);
@@ -260,7 +257,7 @@ public class VentanaPrincipal extends JFrame {
         b.setBackground(bg); 
         b.setForeground(Color.WHITE); 
         b.setFocusPainted(false); 
-        b.setContentAreaFilled(false); 
+        b.setContentAreaFilled(false);
         b.setOpaque(true);
         b.setBorder(new LineBorder(BORDER, 1, true));
         b.addMouseListener(new MouseAdapter() {
@@ -277,3 +274,4 @@ public class VentanaPrincipal extends JFrame {
         SwingUtilities.invokeLater(() -> new VentanaPrincipal().setVisible(true));
     }
 }
+

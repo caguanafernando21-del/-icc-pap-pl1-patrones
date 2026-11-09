@@ -1,7 +1,7 @@
 package primera.aplicacion.principal;
 
 public abstract class ProductoBase implements Pedido {
-    private static int contadorId = 1;
+    private static int contadorId = -2;
     protected String id;
     protected String nombre;
     protected double precio;
