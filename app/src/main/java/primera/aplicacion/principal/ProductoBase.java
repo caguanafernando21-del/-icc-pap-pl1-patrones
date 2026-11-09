@@ -22,7 +22,7 @@ public abstract class ProductoBase implements Pedido {
     public Pedido clonar() {
         try {
             ProductoBase clon = (ProductoBase) super.clone();
-            clon.id = String.valueOf(contadorId++); // ID diferente para cada clon (Paso 2)
+            clon.id = String.valueOf(contadorId++); // ID diferente para cada clon 
             return clon;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
