@@ -49,7 +49,7 @@ public class VentanaPrincipal extends JFrame {
         JPanel pBase = tarjeta("☰ PRODUCTOS BASE");
         JPanel gridP = new JPanel(new GridLayout(2, 2, 8, 8));
         gridP.setOpaque(false);
-        gridP.add(boton("☕", "Café", "$3.50", "CAFE"));
+        gridP.add(boton("☕", "Café", "$2.20", "CAFE"));
         gridP.add(boton("🥗", "Ensalada", "$7.50", "ENSALADA"));
         gridP.add(boton("🍕", "Pizza", "$12.00", "PIZZA"));
         pBase.add(gridP, BorderLayout.CENTER);
